@@ -7,10 +7,10 @@
       :options="options"
       @change="handleChange"
     />
-    <div>
-      <Swiper></Swiper>
-    </div>
+    <Swiper></Swiper>
     <TabBar></TabBar>
+    <Icons></Icons>
+    <Recommend></Recommend>
   </div>
 </template>
 
@@ -19,6 +19,8 @@
 import TabBar from '@/components/common/TabBar.vue'
 import Header from '@/components/Home/Header.vue'
 import Swiper from '@/components/Home/Swiper.vue'
+import Icons from '@/components/Home/Icons.vue'
+import Recommend from '@/components/Home/Recommend.vue'
 export default {
   name: 'Home',
   data () {
@@ -44,7 +46,9 @@ export default {
   components: {
     TabBar,
     Header,
-    Swiper
+    Swiper,
+    Icons,
+    Recommend
   },
   methods: {
     handleChange () {}
@@ -53,6 +57,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.home{
+  width: 100vw;
+  // background-color: #dddddd;
+}
 .ly-tab{
   position:fixed;
   top:60px;

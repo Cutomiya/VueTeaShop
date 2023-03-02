@@ -19,6 +19,7 @@ export default {}
 
 <style lang="less" scoped>
 header{
+  touch-action: none;
   background-color:red;
   display:flex;
   justify-content:space-around;
