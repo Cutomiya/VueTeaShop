@@ -52,15 +52,15 @@ export default {
 
 <style lang="less" scoped>
 .tabBar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 999;
+  // position: fixed;
+  // bottom: 0;
+  // left: 0;
+  // z-index: 999;
   width: 100%;
   background-color: #ffffff;
   height: 70px;
   border-top: 1px solid #e9e9e9;
-  box-sizing: border-box;
+  // box-sizing: border-box;
   ul{
     display: flex;
     justify-content: space-around;

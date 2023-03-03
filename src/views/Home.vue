@@ -1,16 +1,22 @@
 <template>
   <div class="home">
-    <Header></Header>
-    <ly-tab
-       v-model="selectedId"
-      :items="items"
-      :options="options"
-      @change="handleChange"
-    />
-    <Swiper></Swiper>
+    <div class="headers">
+      <Header></Header>
+      <ly-tab
+         v-model="selectedId"
+        :items="items"
+        :options="options"
+        @change="handleChange"
+      />
+    </div>
+    <section ref="wrapper">
+      <div>
+        <Swiper></Swiper>
+        <Icons></Icons>
+        <Recommend></Recommend>
+      </div>
+    </section>
     <TabBar></TabBar>
-    <Icons></Icons>
-    <Recommend></Recommend>
   </div>
 </template>
 
@@ -21,6 +27,7 @@ import Header from '@/components/Home/Header.vue'
 import Swiper from '@/components/Home/Swiper.vue'
 import Icons from '@/components/Home/Icons.vue'
 import Recommend from '@/components/Home/Recommend.vue'
+import BetterScroll from 'better-scroll'
 export default {
   name: 'Home',
   data () {
@@ -52,17 +59,35 @@ export default {
   },
   methods: {
     handleChange () {}
+  },
+  mounted () {
+    /* eslint-disable no-new */
+    new BetterScroll(this.$refs.wrapper, {
+      movable: true,
+      zoom: true
+    })
   }
 }
 </script>
 
 <style lang="less" scoped>
 .home{
+  display: flex;
+  flex-direction: column;
   width: 100vw;
-  // background-color: #dddddd;
+  height: 100vh;
+  overflow: hidden;
 }
-.ly-tab{
+.headers{
+  width: 100%;
+  height: 93px;
   position:fixed;
-  top:60px;
+  top:0;
+  left:0;
+}
+section{
+  flex:1;
+  overflow: hidden;
+  margin-top:93px;
 }
 </style>

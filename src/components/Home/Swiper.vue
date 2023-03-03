@@ -49,7 +49,6 @@ export default {
 
 <style lang="less" scoped>
 .Swiper{
-  margin-top:93px;
   touch-action: none;
   position: relative;
   .swiper-pagination{

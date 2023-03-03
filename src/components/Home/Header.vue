@@ -24,9 +24,9 @@ header{
   display:flex;
   justify-content:space-around;
   align-items: center;
-  position: fixed;
-  top:0;
-  left:0;
+  // position: fixed;
+  // top:0;
+  // left:0;
   width: 100%;
   height: 60px;
   h1{
@@ -45,7 +45,7 @@ header{
   .search{
     display:flex;
     position: absolute;
-    width: 240px;
+    width: 60%;
     height: 40px;
     background-color: rgb(255, 255, 255);
     border-radius: 20px;
