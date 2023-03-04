@@ -9,7 +9,11 @@ import '@/assets/css/iconfont.css'
 import '@/assets/js/flexible'
 
 import LyTab from 'ly-tab'
+import BScroll from '@better-scroll/core'
+import ObserveDOM from '@better-scroll/observe-dom'
+
 Vue.use(LyTab)
+BScroll.use(ObserveDOM)
 
 Vue.config.productionTip = false
 

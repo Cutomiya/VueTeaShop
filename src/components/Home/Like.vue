@@ -1,15 +1,15 @@
 <template>
-  <div class="recommend">
+  <div class="like">
     <Card>
-      <span>火爆推荐</span>
+      <span>猜你喜欢</span>
     </Card>
     <ul>
       <li v-for="item in recList" :key="item.id">
         <h2>
           <img :src="item.url" alt="">
         </h2>
-        <div>
-          <span class="name">{{ item.name }}</span>
+        <span class="name">{{ item.name }}</span>
+        <div class="priceBox">
           <span class="price">￥{{ item.price }}</span>
         </div>
       </li>
@@ -54,42 +54,43 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.recommend{
-  margin-top:10px;
+.like{
   text-align: center;
   ul{
+    margin-top:10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     li{
-      background-color: rgb(243, 243, 243);
-      position: relative;
+      width: 50%;
       display: flex;
-      height: 120px;
+      flex-direction: column;
+      position: relative;
       align-items: center;
-      margin: 10px 5px;
-      border-radius: 8px;
       h2{
-        position: absolute;
-        top: 0;
+        width: 48vw;
+        height: 26vh;
         img{
-          width: 120px;
-          height: 120px;
+          width: 100%;
+          height: 100%;
+          background-size:contain
         }
       }
-      div{
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        right:0;
-        top:0;
-        text-align:right;
-        padding:10px;
-        .name{
-          // width: 100%;
-          padding-left:120px;
-          display: block;
-          font-weight: 400;
-          font-size: 20px;
-          margin-bottom: 10px;
-        }
+      .name{
+        margin-top:4px;
+        text-align: left;
+        width: 180px;
+        display: block;
+        font-weight: 400;
+        font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .priceBox{
+        width: 180px;
+        text-align: left;
         .price{
           font-size: 24px;
           color: red;

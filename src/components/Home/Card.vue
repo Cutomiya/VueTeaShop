@@ -1,7 +1,7 @@
 <template>
   <div class="title">
     <slot>
-      <span>火爆推荐</span>
+      <span></span>
     </slot>
   </div>
 </template>
@@ -16,9 +16,12 @@ export default {
 .title{
   position: relative;
   span{
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 400;
     position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   span::after{
     content:"";
@@ -30,7 +33,7 @@ export default {
     background-color: #c4c4c4;
     top:50%;
     margin-top:-4px;
-    left:-12%;
+    left:-20%;
   }
   span::before{
     content:"";
@@ -42,7 +45,7 @@ export default {
     background-color: #c4c4c4;
     top:50%;
     margin-top:-4px;
-    right:-12%;
+    right:-20%;
   }
 }
 </style>

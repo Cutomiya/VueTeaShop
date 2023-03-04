@@ -10,10 +10,11 @@
       />
     </div>
     <section ref="wrapper">
-      <div>
+      <div class="Box">
         <Swiper></Swiper>
         <Icons></Icons>
         <Recommend></Recommend>
+        <Like></Like>
       </div>
     </section>
     <TabBar></TabBar>
@@ -28,6 +29,7 @@ import Swiper from '@/components/Home/Swiper.vue'
 import Icons from '@/components/Home/Icons.vue'
 import Recommend from '@/components/Home/Recommend.vue'
 import BetterScroll from 'better-scroll'
+import Like from '@/components/Home/Like.vue'
 export default {
   name: 'Home',
   data () {
@@ -55,7 +57,8 @@ export default {
     Header,
     Swiper,
     Icons,
-    Recommend
+    Recommend,
+    Like
   },
   methods: {
     handleChange () {}
@@ -64,7 +67,8 @@ export default {
     /* eslint-disable no-new */
     new BetterScroll(this.$refs.wrapper, {
       movable: true,
-      zoom: true
+      zoom: true,
+      observeDOM: true
     })
   }
 }
