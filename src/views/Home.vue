@@ -11,10 +11,11 @@
     </div>
     <section ref="wrapper">
       <div class="Box">
-        <Swiper></Swiper>
-        <Icons></Icons>
-        <Recommend></Recommend>
-        <Like></Like>
+        <Swiper v-if="false"></Swiper>
+        <Icons v-if="false"></Icons>
+        <Recommend v-if="false"></Recommend>
+        <Like v-if="false"></Like>
+        <Advertisement></Advertisement>
       </div>
     </section>
     <TabBar></TabBar>
@@ -30,6 +31,8 @@ import Icons from '@/components/Home/Icons.vue'
 import Recommend from '@/components/Home/Recommend.vue'
 import BetterScroll from 'better-scroll'
 import Like from '@/components/Home/Like.vue'
+import Advertisement from '@/components/Home/Advertisement.vue'
+import axios from 'axios'
 export default {
   name: 'Home',
   data () {
@@ -58,10 +61,21 @@ export default {
     Swiper,
     Icons,
     Recommend,
-    Like
+    Like,
+    Advertisement
   },
   methods: {
-    handleChange () {}
+    handleChange () {
+      // console.log(item, index)
+      console.log('666')
+    },
+    async initCarList () {
+      const { data: res } = await axios.get('api/home')
+      console.log(res)
+      // if (res.status === 200) {
+      //   this.list = res.list
+      // }
+    }
   },
   mounted () {
     /* eslint-disable no-new */
@@ -70,6 +84,14 @@ export default {
       zoom: true,
       observeDOM: true
     })
+  },
+  created () {
+    // axios({
+    //   url: '/api/home'
+    // }).then(res => {
+    //   console.log(res)
+    // })
+    this.initCarList()
   }
 }
 </script>
