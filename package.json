@@ -5,8 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "start": "node dev-server.js 3000"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@better-scroll/observe-dom": "^2.5.0",

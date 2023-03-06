@@ -2,7 +2,7 @@
   <div class="Swiper">
     <swiper :options="swiperOption">
       <swiper-slide v-for="item in swiperList" :key="item.id">
-        <img :src="item.url" alt="">
+        <img :src="change(item.url)" alt="">
       </swiper-slide>
     </swiper>
     <div class="swiper-pagination"></div>
@@ -18,6 +18,9 @@ export default {
     swiper,
     swiperSlide
   },
+  props: {
+    swiperList: Array
+  },
   data () {
     return {
       swiperOption: {
@@ -27,21 +30,26 @@ export default {
           el: '.swiper-pagination',
           clickable: true
         }
-      },
-      swiperList: [
-        {
-          id: 1,
-          url: require('@/assets/images/swiper/swiper1.png')
-        },
-        {
-          id: 2,
-          url: require('@/assets/images/swiper/swiper2.png')
-        },
-        {
-          id: 3,
-          url: require('@/assets/images/swiper/swiper3.png')
-        }
-      ]
+      }
+      // swiperList: [
+      //   {
+      //     id: 1,
+      //     url: require('@/assets/images/swiper/swiper1.png')
+      //   },
+      //   {
+      //     id: 2,
+      //     url: require('@/assets/images/swiper/swiper2.png')
+      //   },
+      //   {
+      //     id: 3,
+      //     url: require('@/assets/images/swiper/swiper3.png')
+      //   }
+      // ]
+    }
+  },
+  methods: {
+    change (item) {
+      return require('@/assets/images/swiper/' + item)
     }
   }
 }

@@ -6,7 +6,7 @@
     <ul>
       <li v-for="item in recList" :key="item.id">
         <h2>
-          <img :src="item.url" alt="">
+          <img :src="change(item.url)" alt="">
         </h2>
         <div>
           <span class="name">{{ item.name }}</span>
@@ -20,35 +20,43 @@
 <script>
 import Card from '@/components/Home/Card.vue'
 export default {
-  data () {
-    return {
-      recList: [
-        {
-          id: 1,
-          name: '冰茶超级好喝der~我超想喝的捏捏',
-          url: require('@/assets/images/pic/rec1.jpeg'),
-          price: '9'
-        }, {
-          id: 2,
-          name: '绿茶也是可以的啦~我也很想喝的捏',
-          url: require('@/assets/images/pic/rec2.jpg'),
-          price: '23'
-        }, {
-          id: 3,
-          name: '红茶我超爱',
-          url: require('@/assets/images/pic/rec3.jpg'),
-          price: '64'
-        }, {
-          id: 4,
-          name: '奶盖捏捏nie',
-          url: require('@/assets/images/pic/rec4.jpg'),
-          price: '12'
-        }
-      ]
-    }
+  props: {
+    recList: Array
   },
+  // data () {
+  //   return {
+  //     recList: [
+  //       {
+  //         id: 1,
+  //         name: '冰茶超级好喝der~我超想喝的捏捏',
+  //         url: require('@/assets/images/pic/rec1.jpeg'),
+  //         price: '9'
+  //       }, {
+  //         id: 2,
+  //         name: '绿茶也是可以的啦~我也很想喝的捏',
+  //         url: require('@/assets/images/pic/rec2.jpg'),
+  //         price: '23'
+  //       }, {
+  //         id: 3,
+  //         name: '红茶我超爱',
+  //         url: require('@/assets/images/pic/rec3.jpg'),
+  //         price: '64'
+  //       }, {
+  //         id: 4,
+  //         name: '奶盖捏捏nie',
+  //         url: require('@/assets/images/pic/rec4.jpg'),
+  //         price: '12'
+  //       }
+  //     ]
+  //   }
+  // },
   components: {
     Card
+  },
+  methods: {
+    change (item) {
+      return require('@/assets/images/pic/' + item)
+    }
   }
 }
 </script>

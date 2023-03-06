@@ -11,11 +11,13 @@
     </div>
     <section ref="wrapper">
       <div class="Box">
-        <Swiper v-if="false"></Swiper>
-        <Icons v-if="false"></Icons>
-        <Recommend v-if="false"></Recommend>
-        <Like v-if="false"></Like>
-        <Advertisement></Advertisement>
+        <div v-for="item in newData" :key="item.id">
+          <Swiper v-if="item.type==='swiperList'" :swiperList="item.data"></Swiper>
+          <Icons v-if="item.type==='iconList'" :iconList="item.data"></Icons>
+          <Recommend v-if="item.type==='recList'" :recList="item.data"></Recommend>
+          <Like v-if="item.type==='likeList'" :likeList="item.data"></Like>
+          <Advertisement v-if="item.type==='advList'" :advList="item.data"></Advertisement>
+        </div>
       </div>
     </section>
     <TabBar></TabBar>
@@ -38,15 +40,8 @@ export default {
   data () {
     return {
       selectedId: 0,
-      items: [
-        { label: '推荐' },
-        { label: '大红袍' },
-        { label: '绿茶' },
-        { label: '铁观音' },
-        { label: '普洱' },
-        { label: '茶具' },
-        { label: '花茶' }
-      ],
+      items: [],
+      newData: [],
       options: {
         activeColor: '#f00',
         fixBottom: false,
@@ -71,7 +66,10 @@ export default {
     },
     async initCarList () {
       const { data: res } = await axios.get('api/home')
-      console.log(res)
+      // console.log(res)
+      this.items = Object.freeze(res.data.topBar)
+      this.newData = Object.freeze(res.data.data)
+      console.log(this.newData)
       // if (res.status === 200) {
       //   this.list = res.list
       // }
