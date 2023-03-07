@@ -1,12 +1,19 @@
 <template>
   <div class="ad">
-    <img src="@/assets/images/swiper/swiper1.png" alt="">
+    <img :src="change(advList[0].url)" alt="">
   </div>
 </template>
 
 <script>
 export default {
-
+  props: {
+    advList: Array
+  },
+  methods: {
+    change (item) {
+      return require('@/assets/images/swiper/' + item)
+    }
+  }
 }
 </script>
 

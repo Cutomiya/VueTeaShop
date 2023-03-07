@@ -3,7 +3,7 @@ const app = express()
 const cors = require('cors')
 app.use(cors())
 
-app.get('/api/home', (req, res, next) => {
+app.get('/api/index_list/0/data/1', (req, res, next) => {
   res.send({
     code: 0,
     data: {
@@ -107,6 +107,49 @@ app.get('/api/home', (req, res, next) => {
         }
       ]
     }
+  })
+})
+
+app.get('/api/index_list/1/data/1', (req, res, next) => {
+  res.send({
+    data: [
+      {
+        id: 0,
+        type: 'advList',
+        data: [
+          {
+            id: 1,
+            url: 'swiper1.png'
+          }
+        ]
+      }, { // 这里是猜你喜欢
+        id: 1,
+        type: 'likeList',
+        data: [
+          {
+            id: 1,
+            name: '冰茶超级好喝der~我超想喝的捏捏',
+            url: 'rec1.jpeg',
+            price: '9'
+          }, {
+            id: 2,
+            name: '绿茶也是可以的啦~我也很想喝的捏',
+            url: 'rec2.jpg',
+            price: '23'
+          }, {
+            id: 3,
+            name: '红茶我超爱',
+            url: 'rec3.jpg',
+            price: '64'
+          }, {
+            id: 4,
+            name: '奶盖捏捏nie',
+            url: 'rec4.jpg',
+            price: '12'
+          }
+        ]
+      }
+    ]
   })
 })
 

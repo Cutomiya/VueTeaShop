@@ -13,10 +13,10 @@
       <div class="Box">
         <div v-for="item in newData" :key="item.id">
           <Swiper v-if="item.type==='swiperList'" :swiperList="item.data"></Swiper>
+          <Advertisement v-if="item.type==='advList'" :advList="item.data"></Advertisement>
           <Icons v-if="item.type==='iconList'" :iconList="item.data"></Icons>
           <Recommend v-if="item.type==='recList'" :recList="item.data"></Recommend>
           <Like v-if="item.type==='likeList'" :likeList="item.data"></Like>
-          <Advertisement v-if="item.type==='advList'" :advList="item.data"></Advertisement>
         </div>
       </div>
     </section>
@@ -60,19 +60,26 @@ export default {
     Advertisement
   },
   methods: {
-    handleChange () {
+    async addData (index) {
+      const { data: res } = await axios.get('api/index_list/' + index + '/data/1')
+      // console.log(res)
+      if (res?.data.constructor !== Array) {
+        this.newData = res.data.data
+      } else {
+        this.newData = res.data
+      }
+    },
+    handleChange (item, index) {
+      if (index !== 0 && index !== 1) return
       // console.log(item, index)
-      console.log('666')
+      this.addData(index)
     },
     async initCarList () {
-      const { data: res } = await axios.get('api/home')
+      const { data: res } = await axios.get('api/index_list/0/data/1')
       // console.log(res)
       this.items = Object.freeze(res.data.topBar)
       this.newData = Object.freeze(res.data.data)
-      console.log(this.newData)
-      // if (res.status === 200) {
-      //   this.list = res.list
-      // }
+      // console.log(this.newData)
     }
   },
   mounted () {
@@ -113,5 +120,16 @@ section{
   flex:1;
   overflow: hidden;
   margin-top:93px;
+}
+::v-deep .ly-tab-list{
+  padding: 0px 10px !important;
+}
+::v-deep .ly-tabbar{
+  height: 33px;
+  box-shadow:none;
+  border-bottom:0px;
+}
+::v-deep .ly-tab-active-bar{
+  bottom: 0px !important;
 }
 </style>
