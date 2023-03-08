@@ -5,3 +5,11 @@
 ul{
   list-style:none;
 }
+input{
+  background:none;
+  outline: none;
+  border: none;
+}
+input:focus{
+  border: none;
+}

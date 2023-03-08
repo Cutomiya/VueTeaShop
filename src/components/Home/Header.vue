@@ -3,7 +3,7 @@
     <h1>
       <img src="@/assets/logo.png" alt="">
     </h1>
-    <div class="search">
+    <div class="search" @click="goSearch">
       <span class="iconfont icon-fangdajing"></span>
       猜你喜欢的
     </div>
@@ -14,7 +14,13 @@
 </template>
 
 <script>
-export default {}
+export default {
+  methods: {
+    goSearch () {
+      this.$router.push('/search')
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -57,7 +63,7 @@ header{
     color:#ccc;
     span{
       font-size: 20px;
-      margin: 5px;;
+      margin: 5px;
       color:#ccc;
     }
   }
