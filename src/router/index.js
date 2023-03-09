@@ -35,6 +35,17 @@ const routes = [
   {
     path: '/search',
     name: 'Search',
+    children: [
+      {
+        path: '/', // 默认加载
+        name: 'Index',
+        component: () => import('../views/Search/SearchIndex.vue')
+      }, {
+        path: 'list',
+        name: 'SearchList',
+        component: () => import('../views/Search/SearchList.vue')
+      }
+    ],
     component: () =>
       import('../views/Search.vue')
   }

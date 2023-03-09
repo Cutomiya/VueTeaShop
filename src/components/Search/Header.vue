@@ -9,7 +9,7 @@
         <input type="text" placeholder="搜索你喜欢的商品...">
       </form>
     </div>
-    <div class="btn">搜索</div>
+    <div class="btn" @click="goSearch">搜索</div>
   </div>
 </template>
 
@@ -18,6 +18,11 @@ export default {
   methods: {
     re () {
       this.$router.back()
+    },
+    goSearch () {
+      this.$router.push({
+        name: 'SearchList'
+      })
     }
   }
 }
