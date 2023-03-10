@@ -34,7 +34,7 @@ const routes = [
   },
   {
     path: '/search',
-    name: 'Search',
+    // name: 'Search',
     children: [
       {
         path: '/', // 默认加载
@@ -47,7 +47,7 @@ const routes = [
       }
     ],
     component: () =>
-      import('../views/Search.vue')
+      import('../views/Search/Search.vue')
   }
 ]
 
