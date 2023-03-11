@@ -29,14 +29,18 @@ export default {
       this.searchArr.unshift(this.searchVal) // 增加数据
       let newArr = new Set(this.searchArr) // es6去重
       localStorage.setItem('searchList', JSON.stringify(Array.from(newArr))) // 给本地储存赋值,es6转换为真正的数组
+      if (this.searchVal === this.$route.query.key) return
       this.$router.push({
-        name: 'SearchList'
+        name: 'SearchList',
+        query: {
+          key: this.searchVal // 这个是查询参数，可以通过this.$route.query.名字 获取
+        }
       })
     }
   },
   data () {
     return {
-      searchVal: '',
+      searchVal: '' || this.$route.query.key,
       searchArr: [],
       searList: []
     }

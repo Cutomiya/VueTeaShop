@@ -24,6 +24,7 @@
 <script>
 import TabBar from '@/components/common/TabBar.vue'
 import Header from '@/components/Search/Header.vue'
+import { MessageBox } from 'mint-ui'
 export default {
   components: {
     TabBar,
@@ -39,8 +40,16 @@ export default {
   },
   methods: {
     cleanArr () {
-      localStorage.removeItem('searchList')
-      this.searchArr = []
+      MessageBox({
+        title: '提示',
+        message: '确定执行此操作?',
+        showCancelButton: true
+      }).then(res => {
+        if (res === 'confirm') {
+          localStorage.removeItem('searchList')
+          this.searchArr = []
+        }
+      })
     }
   }
 }
