@@ -13,6 +13,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-shangjiantou:before {
+  content: "\e61e";
+}
+
+.icon-xiajiantou:before {
+  content: "\e61f";
+}
+
 .icon-fanhui:before {
   content: "\e601";
 }
@@ -40,4 +48,3 @@
 .icon-kefu:before {
   content: "\e622";
 }
-
