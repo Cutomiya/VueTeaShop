@@ -5,8 +5,8 @@
     </div>
     <div class="itp">
       <i class="iconfont icon-fangdajing"></i>
-      <form action="" onsubmit="return false">
-        <input type="text" placeholder="搜索你喜欢的商品...">
+      <form action="" onsubmit="return false" @keyup.enter="goSearch">
+        <input type="search" placeholder="搜索你喜欢的商品..." v-model="searchVal">
       </form>
     </div>
     <div class="btn" @click="goSearch">搜索</div>
@@ -20,9 +20,25 @@ export default {
       this.$router.back()
     },
     goSearch () {
+      if (!this.searchVal) return
+      if (!localStorage.getItem('searchList')) {
+        localStorage.setItem('searchList', '[]') //  获取指定key本地存储数据的值
+      } else {
+        this.searchArr = JSON.parse(localStorage.getItem('searchList')) // 把json格式的字符串转为js中的数组或对象
+      }
+      this.searchArr.unshift(this.searchVal) // 增加数据
+      let newArr = new Set(this.searchArr) // es6去重
+      localStorage.setItem('searchList', JSON.stringify(Array.from(newArr))) // 给本地储存赋值,es6转换为真正的数组
       this.$router.push({
         name: 'SearchList'
       })
+    }
+  },
+  data () {
+    return {
+      searchVal: '',
+      searchArr: [],
+      searList: []
     }
   }
 }

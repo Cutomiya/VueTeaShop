@@ -13,6 +13,7 @@ module.exports = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'vue/multi-word-component-names': 'off'// 禁用监测多单词
+    'vue/multi-word-component-names': 'off',// 禁用监测多单词
+    'prefer-const': 'off'
   }
 }

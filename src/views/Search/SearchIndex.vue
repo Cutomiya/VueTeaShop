@@ -2,16 +2,17 @@
   <div class="search">
     <Header></Header>
     <section>
-      <div class="history">
+      <div class="history" v-if="searchArr.length">
         <h2>
           <i class="iconfont icon-lishi"></i>
           <span>历史搜索</span>
-          <span>清空历史记录</span>
+          <span @click="cleanArr">清空历史记录</span>
           <ul>
-            <li>茶叶</li><li>茶叶</li><li>茶叶5</li><li>茶叶</li><li>茶叶54</li><li>茶叶</li><li>茶5叶</li><li>茶叶64</li><li>茶叶</li>
+            <li v-for="item in searchArr"  :key='item.id'>{{item}}</li>
           </ul>
         </h2>
       </div>
+      <div class="noHistory" v-else>暂无历史记录</div>
       <div class="like">
         <h1>推荐商品</h1>
       </div>
@@ -27,6 +28,20 @@ export default {
   components: {
     TabBar,
     Header
+  },
+  data () {
+    return {
+      searchArr: []
+    }
+  },
+  created () {
+    this.searchArr = JSON.parse(localStorage.getItem('searchList') || '[]')
+  },
+  methods: {
+    cleanArr () {
+      localStorage.removeItem('searchList')
+      this.searchArr = []
+    }
   }
 }
 </script>
@@ -72,6 +87,15 @@ export default {
           }
         }
       }
+    }
+    .noHistory{
+      // width: 100%;
+      text-align: center;
+      color:#adadad;
+      padding:10px;
+      margin:0px 30px 10px 30px;
+      font-size:16px;
+      border-bottom:1px solid #adadad;
     }
   }
 }
