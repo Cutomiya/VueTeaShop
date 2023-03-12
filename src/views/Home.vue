@@ -34,7 +34,7 @@ import Recommend from '@/components/Home/Recommend.vue'
 import BetterScroll from 'better-scroll'
 import Like from '@/components/Home/Like.vue'
 import Advertisement from '@/components/Home/Advertisement.vue'
-import axios from 'axios'
+import Http from '@/common/api/request.js'
 export default {
   name: 'Home',
   data () {
@@ -60,13 +60,15 @@ export default {
     Advertisement
   },
   methods: {
-    async addData (index) {
-      const { data: res } = await axios.get('api/index_list/' + index + '/data/1')
+    async addData (index) { // 切换tab栏的请求
+      const { data: res } = await Http.$axios({
+        url: 'api/index_list/' + index + '/data/1'
+      })
       // console.log(res)
-      if (res?.data.constructor !== Array) {
-        this.newData = res.data.data
-      } else {
+      if (res?.constructor !== Array) {
         this.newData = res.data
+      } else {
+        this.newData = res
       }
     },
     handleChange (item, index) {
@@ -74,11 +76,13 @@ export default {
       // console.log(item, index)
       this.addData(index)
     },
-    async initCarList () {
-      const { data: res } = await axios.get('api/index_list/0/data/1')
+    async initCarList () { // 最开始加载页面数据
+      const { data: res } = await Http.$axios({
+        url: 'api/index_list/0/data/1'
+      })
       // console.log(res)
-      this.items = Object.freeze(res.data.topBar)
-      this.newData = Object.freeze(res.data.data)
+      this.items = Object.freeze(res.topBar)
+      this.newData = Object.freeze(res.data)
       // console.log(this.newData)
     }
   },
