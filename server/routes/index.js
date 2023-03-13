@@ -59,7 +59,7 @@ app.get('/api/index_list/0/data/1', (req, res, next) => {
             {
               id: 1,
               name: '冰茶超级好喝der~我超想喝的捏捏',
-              url: 'rec1.jpeg',
+              url: 'rec1.jpg',
               price: '9'
             }, {
               id: 2,
@@ -85,7 +85,7 @@ app.get('/api/index_list/0/data/1', (req, res, next) => {
             {
               id: 1,
               name: '冰茶超级好喝der~我超想喝的捏捏',
-              url: 'rec1.jpeg',
+              url: 'rec1.jpg',
               price: '9'
             }, {
               id: 2,
@@ -129,7 +129,7 @@ app.get('/api/index_list/1/data/1', (req, res, next) => {
           {
             id: 1,
             name: '冰茶超级好喝der~我超想喝的捏捏',
-            url: 'rec1.jpeg',
+            url: 'rec1.jpg',
             price: '9'
           }, {
             id: 2,

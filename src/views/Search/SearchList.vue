@@ -25,7 +25,7 @@
     <section>
       <ul>
         <li>
-          <img src="@/assets/images/pic/rec1.jpeg" alt="">
+          <img src="@/assets/images/pic/rec1.jpg" alt="">
           <h3>个咖啡店监管科水电费进度款司法局圣诞快乐富家大室</h3>
           <div class="buy">
             <div>
@@ -36,7 +36,7 @@
           </div>
         </li>
         <li>
-          <img src="@/assets/images/pic/rec1.jpeg" alt="">
+          <img src="@/assets/images/pic/rec1.jpg" alt="">
           <h3>当升科技的撒跨境电商卡德加撒库拉的</h3>
           <div class="buy">
             <div>
@@ -47,7 +47,7 @@
           </div>
         </li>
         <li>
-          <img src="@/assets/images/pic/rec1.jpeg" alt="">
+          <img src="@/assets/images/pic/rec1.jpg" alt="">
           <h3>56565656565656565656565656565656</h3>
           <div class="buy">
             <div>
