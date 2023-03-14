@@ -66,10 +66,26 @@
 <script>
 import TabBar from '@/components/common/TabBar.vue'
 import Header from '@/components/Search/Header.vue'
+import Http from '@/common/api/request.js'
 export default {
   components: {
     TabBar,
     Header
+  },
+  created () {
+    this.getData()
+  },
+  methods: {
+    async getData () {
+      await Http.$axios({
+        url: '/api/goods/shopList',
+        params: {
+          searchName: this.$route.query.key
+        }
+      }).then(res => {
+        console.log(res)
+      })
+    }
   }
 }
 </script>

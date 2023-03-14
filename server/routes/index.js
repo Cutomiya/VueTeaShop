@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const connention = require('../dataBase/sql')
 app.use(cors())
 
 app.get('/api/index_list/0/data/1', (req, res, next) => {
@@ -110,6 +111,20 @@ app.get('/api/index_list/0/data/1', (req, res, next) => {
   })
 })
 
+// 搜索栏的数据
+app.get('/api/goods/shopList', (req, res, next) => {
+  // res.send({})
+  // let searchName = req.query.searchName
+  connention.query('select * from goodslist', (error, results) => {
+    if (error) return console.log(error.message)
+    res.send({
+      code: 0,
+      data: results
+    })
+  })
+})
+
+// 首页的数据
 app.get('/api/index_list/1/data/1', (req, res, next) => {
   res.send({
     data: [

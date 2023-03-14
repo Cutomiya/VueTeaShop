@@ -3,7 +3,7 @@
     <div class="headers">
       <Header></Header>
       <ly-tab
-         v-model="selectedId"
+        v-model="selectedId"
         :items="items"
         :options="options"
         @change="handleChange"
@@ -62,7 +62,7 @@ export default {
   methods: {
     async addData (index) { // 切换tab栏的请求
       const { data: res } = await Http.$axios({
-        url: 'api/index_list/' + index + '/data/1'
+        url: '/api/index_list/' + index + '/data/1'
       })
       // console.log(res)
       if (res?.constructor !== Array) {
@@ -78,7 +78,7 @@ export default {
     },
     async initCarList () { // 最开始加载页面数据
       const { data: res } = await Http.$axios({
-        url: 'api/index_list/0/data/1'
+        url: '/api/index_list/0/data/1'
       })
       // console.log(res)
       this.items = Object.freeze(res.topBar)
