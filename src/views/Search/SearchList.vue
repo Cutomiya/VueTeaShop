@@ -24,35 +24,13 @@
     </div>
     <section>
       <ul>
-        <li>
-          <img src="@/assets/images/pic/rec1.jpg" alt="">
-          <h3>个咖啡店监管科水电费进度款司法局圣诞快乐富家大室</h3>
+        <li v-for="item in goodsList" :key="item.id">
+          <img :src="change(item.url)" alt="">
+          <h3>{{ item.name }}</h3>
           <div class="buy">
             <div>
               <span>￥</span>
-              <b>4545</b>
-            </div>
-            <div>立即购买</div>
-          </div>
-        </li>
-        <li>
-          <img src="@/assets/images/pic/rec1.jpg" alt="">
-          <h3>当升科技的撒跨境电商卡德加撒库拉的</h3>
-          <div class="buy">
-            <div>
-              <span>￥</span>
-              <b>4545</b>
-            </div>
-            <div>立即购买</div>
-          </div>
-        </li>
-        <li>
-          <img src="@/assets/images/pic/rec1.jpg" alt="">
-          <h3>56565656565656565656565656565656</h3>
-          <div class="buy">
-            <div>
-              <span>￥</span>
-              <b>4545</b>
+              <b>{{ item.price }}</b>
             </div>
             <div>立即购买</div>
           </div>
@@ -83,8 +61,22 @@ export default {
           searchName: this.$route.query.key
         }
       }).then(res => {
-        console.log(res)
+        this.goodsList = res.data
+        console.log(this.goodsList)
       })
+    },
+    change (item) {
+      return require('@/assets/images/pic/' + item)
+    }
+  },
+  data () {
+    return {
+      goodsList: []
+    }
+  },
+  watch: { // 监听到当前路由变化就重新查询
+    $route () {
+      this.getData()
     }
   }
 }
@@ -135,6 +127,7 @@ export default {
         // background-color: aqua;
         img{
           width: 100%;
+          height: 26vh;
           padding:4px;
           box-sizing: border-box;
         }
