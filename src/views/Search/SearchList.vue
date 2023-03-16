@@ -3,23 +3,15 @@
     <div class="header">
       <Header></Header>
       <ul>
-        <li>
-          <div>综合</div>
-        </li>
-        <li>
-          <div>价格</div>
-          <div class="search-btn">
-            <i class="iconfont icon-shangjiantou"></i>
-            <i class="iconfont icon-xiajiantou"></i>
-          </div>
-        </li>
-        <li>
-          <div>销量</div>
-          <div class="search-btn">
-            <i class="iconfont icon-shangjiantou"></i>
-            <i class="iconfont icon-xiajiantou"></i>
-          </div>
-        </li>
+        <li
+          v-for='(item, index) in searchList.data' :key='index'
+          @click='changeTab(index)'>
+        <div :class="index === searchList.currentIndex?'active':''">{{ item.name }}</div>
+        <div class="search-btn" v-if="index != 0">
+          <i class="iconfont icon-shangjiantou" :class="item.status === 1?'active':''"></i>
+          <i class="iconfont icon-xiajiantou" :class="item.status === 2?'active':''"></i>
+        </div>
+      </li>
       </ul>
     </div>
     <section>
@@ -58,25 +50,56 @@ export default {
       await Http.$axios({
         url: '/api/goods/shopList',
         params: {
-          searchName: this.$route.query.key
+          searchName: this.$route.query.key,
+          ...this.orderBy
         }
       }).then(res => {
         this.goodsList = res.data
-        console.log(this.goodsList)
+        // console.log(this.goodsList)
       })
     },
     change (item) {
       return require('@/assets/images/pic/' + item)
+    },
+    changeTab (index) {
+      this.searchList.currentIndex = index // 设置当前下标，让后面知道当前是在第几个下标
+      let ind = this.searchList.data[index]
+      this.searchList.data.forEach((v, i) => {
+        if (i !== index) {
+          v.status = 0
+        }
+        if (index === this.searchList.currentIndex) {
+          ind.status = ind.status === 1 ? 2 : 1
+        }
+      })
+      this.getData()
     }
   },
   data () {
     return {
-      goodsList: []
+      goodsList: [],
+      searchList: {
+        currentIndex: 0,
+        data: [
+          { name: '综合', key: 'nienie' },
+          { name: '价格', status: 0, key: 'price' },
+          { name: '销量', status: 0, key: 'num' }
+        ]
+      }
     }
   },
   watch: { // 监听到当前路由变化就重新查询
     $route () {
       this.getData()
+    }
+  },
+  computed: {
+    orderBy () {
+      let obj = this.searchList.data[this.searchList.currentIndex]
+      let val = obj.status === 1 ? 'asc' : 'desc'
+      return {
+        [obj.key]: val
+      }
     }
   }
 }
@@ -170,5 +193,8 @@ export default {
       }
     }
   }
+}
+.active{
+  color: red;
 }
 </style>

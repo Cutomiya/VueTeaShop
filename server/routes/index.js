@@ -114,8 +114,10 @@ app.get('/api/index_list/0/data/1', (req, res, next) => {
 // 搜索栏的数据
 app.get('/api/goods/shopList', (req, res, next) => {
   // res.send({})
-  let searchName = req.query.searchName
-  connention.query('select * from goodslist where name like "%' + searchName + '%"', (error, results) => {
+  let [searchName, orderName] = Object.keys(req.query)
+  let [name, order] = Object.values(req.query)
+  console.log(searchName, orderName, name, order)
+  connention.query('select * from goodslist where name like "%' + name + '%" order by ' + orderName + ' ' + order + '', (error, results) => {
     if (error) return console.log(error.message)
     res.send({
       code: 0,
