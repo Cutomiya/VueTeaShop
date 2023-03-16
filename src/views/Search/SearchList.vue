@@ -15,9 +15,9 @@
       </ul>
     </div>
     <section>
-      <ul>
+      <ul v-if="goodsList.length">
         <li v-for="item in goodsList" :key="item.id">
-          <img :src="change(item.url)" alt="">
+          <img v-lazy="change(item.url)" alt="">
           <h3>{{ item.name }}</h3>
           <div class="buy">
             <div>
@@ -28,6 +28,7 @@
           </div>
         </li>
       </ul>
+      <h2 v-else>暂无数据</h2>
     </section>
     <TabBar></TabBar>
   </div>

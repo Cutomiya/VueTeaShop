@@ -4,6 +4,65 @@ const cors = require('cors')
 const connention = require('../dataBase/sql')
 app.use(cors())
 
+// 搜索栏的数据
+app.get('/api/goods/shopList', (req, res, next) => {
+  // res.send({})
+  let [searchName, orderName] = Object.keys(req.query)
+  let [name, order] = Object.values(req.query)
+  console.log(searchName, orderName, name, order)
+  connention.query('select * from goodslist where name like "%' + name + '%" order by ' + orderName + ' ' + order + '', (error, results) => {
+    if (error) return console.log(error.message)
+    res.send({
+      code: 0,
+      data: results
+    })
+  })
+})
+
+// 首页的数据
+app.get('/api/index_list/1/data/1', (req, res, next) => {
+  res.send({
+    data: [
+      {
+        id: 0,
+        type: 'advList',
+        data: [
+          {
+            id: 1,
+            url: 'swiper1.png'
+          }
+        ]
+      }, { // 这里是猜你喜欢
+        id: 1,
+        type: 'likeList',
+        data: [
+          {
+            id: 1,
+            name: '冰茶超级好喝der~我超想喝的捏捏',
+            url: 'rec1.jpg',
+            price: '9'
+          }, {
+            id: 2,
+            name: '绿茶也是可以的啦~我也很想喝的捏',
+            url: 'rec2.jpg',
+            price: '23'
+          }, {
+            id: 3,
+            name: '红茶我超爱',
+            url: 'rec3.jpg',
+            price: '64'
+          }, {
+            id: 4,
+            name: '奶盖捏捏nie',
+            url: 'rec4.jpg',
+            price: '12'
+          }
+        ]
+      }
+    ]
+  })
+})
+
 app.get('/api/index_list/0/data/1', (req, res, next) => {
   res.send({
     code: 0,
@@ -103,6 +162,71 @@ app.get('/api/index_list/0/data/1', (req, res, next) => {
               name: '奶盖捏捏nie',
               url: 'rec4.jpg',
               price: '12'
+            }, {
+              id: 5,
+              name: '冰茶超级好喝der~我超想喝的捏捏',
+              url: 'rec1.jpg',
+              price: '9'
+            }, {
+              id: 6,
+              name: '绿茶也是可以的啦~我也很想喝的捏',
+              url: 'rec2.jpg',
+              price: '23'
+            }, {
+              id: 7,
+              name: '红茶我超爱',
+              url: 'rec3.jpg',
+              price: '64'
+            }, {
+              id: 8,
+              name: '奶盖捏捏nie',
+              url: 'rec4.jpg',
+              price: '12'
+            }, {
+              id: 9,
+              name: '冰茶超级好喝der~我超想喝的捏捏',
+              url: 'rec1.jpg',
+              price: '9'
+            }, {
+              id: 10,
+              name: '绿茶也是可以的啦~我也很想喝的捏',
+              url: 'rec2.jpg',
+              price: '23'
+            }, {
+              id: 11,
+              name: '红茶我超爱',
+              url: 'rec3.jpg',
+              price: '64'
+            }, {
+              id: 12,
+              name: '奶盖捏捏nie',
+              url: 'rec4.jpg',
+              price: '12'
+            }, {
+              id: 13,
+              name: '冰茶超级好喝der~我超想喝的捏捏',
+              url: 'rec1.jpg',
+              price: '9'
+            }, {
+              id: 14,
+              name: '绿茶也是可以的啦~我也很想喝的捏',
+              url: 'rec2.jpg',
+              price: '23'
+            }, {
+              id: 15,
+              name: '红茶我超爱',
+              url: 'rec3.jpg',
+              price: '64'
+            }, {
+              id: 16,
+              name: '奶盖捏捏nie',
+              url: 'rec4.jpg',
+              price: '12'
+            }, {
+              id: 17,
+              name: '????',
+              url: 'rec5.png',
+              price: '???'
             }
           ]
         }
@@ -110,68 +234,8 @@ app.get('/api/index_list/0/data/1', (req, res, next) => {
     }
   })
 })
-
-// 搜索栏的数据
-app.get('/api/goods/shopList', (req, res, next) => {
-  // res.send({})
-  let [searchName, orderName] = Object.keys(req.query)
-  let [name, order] = Object.values(req.query)
-  console.log(searchName, orderName, name, order)
-  connention.query('select * from goodslist where name like "%' + name + '%" order by ' + orderName + ' ' + order + '', (error, results) => {
-    if (error) return console.log(error.message)
-    res.send({
-      code: 0,
-      data: results
-    })
-  })
-})
-
-// 首页的数据
-app.get('/api/index_list/1/data/1', (req, res, next) => {
-  res.send({
-    data: [
-      {
-        id: 0,
-        type: 'advList',
-        data: [
-          {
-            id: 1,
-            url: 'swiper1.png'
-          }
-        ]
-      }, { // 这里是猜你喜欢
-        id: 1,
-        type: 'likeList',
-        data: [
-          {
-            id: 1,
-            name: '冰茶超级好喝der~我超想喝的捏捏',
-            url: 'rec1.jpg',
-            price: '9'
-          }, {
-            id: 2,
-            name: '绿茶也是可以的啦~我也很想喝的捏',
-            url: 'rec2.jpg',
-            price: '23'
-          }, {
-            id: 3,
-            name: '红茶我超爱',
-            url: 'rec3.jpg',
-            price: '64'
-          }, {
-            id: 4,
-            name: '奶盖捏捏nie',
-            url: 'rec4.jpg',
-            price: '12'
-          }
-        ]
-      }
-    ]
-  })
-})
-
 // 监听端口
-app.listen(8081, () => {}) // 后台运行在3000端口
+app.listen(8081, () => {}) // 后台运行在8081端口
 
 // const express = require('express')
 // const router = express.Router()

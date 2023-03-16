@@ -6,7 +6,7 @@
     <ul>
       <li v-for="item in likeList" :key="item.id">
         <h2>
-          <img :src="change(item.url)" alt="">
+          <img v-lazy="change(item.url)" alt="">
         </h2>
         <span class="name">{{ item.name }}</span>
         <div class="priceBox">
@@ -68,7 +68,7 @@ export default {
     margin-top:10px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     li{
       width: 50%;

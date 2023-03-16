@@ -8,7 +8,7 @@
           <span>历史搜索</span>
           <span @click="cleanArr">清空历史记录</span>
           <ul>
-            <li v-for="item in searchArr"  :key='item.id'>{{item}}</li>
+            <li v-for="item in searchArr"  :key='item.id' @click="historyGo(item)">{{item}}</li>
           </ul>
         </h2>
       </div>
@@ -48,6 +48,14 @@ export default {
         if (res === 'confirm') {
           localStorage.removeItem('searchList')
           this.searchArr = []
+        }
+      })
+    },
+    historyGo (item) {
+      this.$router.push({
+        name: 'SearchList',
+        query: {
+          key: item
         }
       })
     }
