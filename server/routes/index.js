@@ -4,6 +4,148 @@ const cors = require('cors')
 const connention = require('../dataBase/sql')
 app.use(cors())
 
+// 分类栏的接口
+app.get('/api/goods/cartList', (req, res, next) => {
+  res.send({
+    code: 0,
+    data: [
+      {
+        id: 0,
+        name: '默认',
+        data: [
+          {
+            id: 0,
+            name: '推荐',
+            list: [
+              {
+                id: 0,
+                name: '星球1',
+                url: '星球.png'
+              }, {
+                id: 1,
+                name: '星球2',
+                url: '星球.png'
+              }, {
+                id: 2,
+                name: '星球3',
+                url: '星球.png'
+              }, {
+                id: 3,
+                name: '星球4',
+                url: '星球.png'
+              }, {
+                id: 4,
+                name: '星球5',
+                url: '星球.png'
+              }, {
+                id: 5,
+                name: '星球6',
+                url: '星球.png'
+              }
+            ]
+          }, {
+            id: 1,
+            name: '星球',
+            list: [
+              {
+                id: 0,
+                name: '星球1',
+                url: '星球.png'
+              }, {
+                id: 1,
+                name: '星球2',
+                url: '星球.png'
+              }, {
+                id: 2,
+                name: '星球3',
+                url: '星球.png'
+              }, {
+                id: 3,
+                name: '星球4',
+                url: '星球.png'
+              }, {
+                id: 4,
+                name: '星球5',
+                url: '星球.png'
+              }, {
+                id: 5,
+                name: '星球6',
+                url: '星球.png'
+              }
+            ]
+          }
+        ]
+      }, {
+        id: 1,
+        name: '第二页',
+        data: [
+          {
+            id: 0,
+            name: '推荐',
+            list: [
+              {
+                id: 0,
+                name: '星球1',
+                url: '星球.png'
+              }, {
+                id: 1,
+                name: '星球2',
+                url: '星球.png'
+              }, {
+                id: 2,
+                name: '星球3',
+                url: '星球.png'
+              }, {
+                id: 3,
+                name: '星球4',
+                url: '星球.png'
+              }, {
+                id: 4,
+                name: '星球5',
+                url: '星球.png'
+              }, {
+                id: 5,
+                name: '星球6',
+                url: '星球.png'
+              }
+            ]
+          }, {
+            id: 1,
+            name: '星球',
+            list: [
+              {
+                id: 0,
+                name: '星球1',
+                url: '星球.png'
+              }, {
+                id: 1,
+                name: '星球2',
+                url: '星球.png'
+              }, {
+                id: 2,
+                name: '星球3',
+                url: '星球.png'
+              }, {
+                id: 3,
+                name: '星球4',
+                url: '星球.png'
+              }, {
+                id: 4,
+                name: '星球5',
+                url: '星球.png'
+              }, {
+                id: 5,
+                name: '星球6',
+                url: '星球.png'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  })
+})
+
 // 搜索栏的数据
 app.get('/api/goods/shopList', (req, res, next) => {
   // res.send({})

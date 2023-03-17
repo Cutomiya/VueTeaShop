@@ -15,52 +15,17 @@
     <section>
       <div class="left">
         <ul>
-          <li class="active">推荐</li>
-          <li>嗯哼</li>
-          <li>哈哈</li>
-          <li>拉拉</li>
+          <li v-for="item in leftData" :key="item.id">{{ item.name }}</li>
         </ul>
       </div>
       <div class="right">
         <ul>
-          <li class="shop-list">
-            <h2>推荐</h2>
+          <li class="shop-list" v-for="list in rightData[0]" :key="list.id">
+            <h2>{{ list.name }}</h2>
             <ul>
-              <li>
-                <img src="@/assets/images/icons/星球.png" alt="">
-                <span>星球</span>
-              </li>
-              <li>
-                <img src="@/assets/images/icons/星球.png" alt="">
-                <span>星球</span>
-              </li>
-              <li>
-                <img src="@/assets/images/icons/星球.png" alt="">
-                <span>星球</span>
-              </li>
-              <li>
-                <img src="@/assets/images/icons/星球.png" alt="">
-                <span>星球</span>
-              </li>
-              <li>
-                <img src="@/assets/images/icons/星球.png" alt="">
-                <span>星球</span>
-              </li>
-              <li>
-                <img src="@/assets/images/icons/星球.png" alt="">
-                <span>星球</span>
-              </li>
-              <li>
-                <img src="@/assets/images/icons/星球.png" alt="">
-                <span>星球</span>
-              </li>
-              <li>
-                <img src="@/assets/images/icons/星球.png" alt="">
-                <span>星球</span>
-              </li>
-              <li>
-                <img src="@/assets/images/icons/星球.png" alt="">
-                <span>星球</span>
+              <li v-for="item in list.list" :key="item.id">
+                <img :src="change(item.url)" alt="">
+                <span>{{ item.name }}</span>
               </li>
             </ul>
           </li>
@@ -73,10 +38,41 @@
 
 <script>
 import tabBar from '@/components/common/TabBar.vue'
+import Http from '@/common/api/request.js'
 export default {
   name: 'Cart',
   components: {
     tabBar
+  },
+  methods: {
+    async getData () {
+      await Http.$axios({
+        url: '/api/goods/cartList'
+      }).then(res => {
+        let ans = res.data
+        // console.log(ans)
+        ans.forEach(i => {
+          this.leftData.push({
+            id: i.id,
+            name: i.name
+          })
+          this.rightData.push(i.data)
+        })
+        console.log(this.rightData[0])
+      })
+    },
+    change (item) {
+      return require('@/assets/images/icons/' + item)
+    }
+  },
+  created () {
+    this.getData()
+  },
+  data () {
+    return {
+      leftData: [],
+      rightData: []
+    }
   }
 }
 </script>
