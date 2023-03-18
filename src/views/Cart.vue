@@ -12,24 +12,26 @@
         <img src="@/assets/images/tabBar/home1.png">
       </div>
     </header>
-    <section>
-      <div class="left">
-        <ul>
-          <li v-for="item in leftData" :key="item.id">{{ item.name }}</li>
+    <section ref="box">
+      <div class="left" ref="le">
+        <ul class="leftList">
+          <li v-for="item in leftData" :key="item.id" @click="goScroll(item.id)">{{ item.name }}</li>
         </ul>
       </div>
-      <div class="right">
-        <ul>
-          <li class="shop-list" v-for="list in rightData[0]" :key="list.id">
-            <h2>{{ list.name }}</h2>
-            <ul>
-              <li v-for="item in list.list" :key="item.id">
-                <img :src="change(item.url)" alt="">
-                <span>{{ item.name }}</span>
-              </li>
-            </ul>
-          </li>
-        </ul>
+      <div class="right" ref="ri">
+        <div>
+          <ul v-for="list in rightData" :key="list.id" class="list">
+            <li class="shop-list" v-for="item in list" :key="item.id">
+              <h2>{{ item.name }}</h2>
+              <ul>
+                <li v-for="i in item.list" :key="i.id">
+                  <img v-lazy="change(i.url)" alt="">
+                  <span>{{ i.name }}</span>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
     <tabBar></tabBar>
@@ -39,6 +41,7 @@
 <script>
 import tabBar from '@/components/common/TabBar.vue'
 import Http from '@/common/api/request.js'
+import BetterScroll from 'better-scroll'
 export default {
   name: 'Cart',
   components: {
@@ -58,11 +61,50 @@ export default {
           })
           this.rightData.push(i.data)
         })
-        console.log(this.rightData[0])
+        /* eslint-disable no-new */
+        setTimeout(() => {
+          let height = 0 // 当前高度
+          this.allHight.push(height) // 推入数组，算出每一项的区间
+          let uls = this.$refs.ri.getElementsByClassName('list')
+          // console.log(this.$refs.ri.getElementsByClassName('list'))
+          // console.log(uls)
+          Array.from(uls).forEach(i => {
+            // 计算每一项的高度
+            height += i.clientHeight
+            // console.log(i.clientHeight)
+            this.allHight.push(height)
+          })
+          // console.log(this.allHight)
+          // 以下用于解决BS内子元素小于父元素仍会滚动的问题
+          let leftHeight = 0
+          let le = this.$refs.le.getElementsByClassName('leftList')
+          // console.log(le)
+          Array.from(le).forEach(i => {
+            leftHeight += i.clientHeight
+          })
+          // console.log(leftHeight)
+          // console.log(this.$refs.box.getElementsByClassName('left'))
+          let leftAllHeight = this.$refs.box.getElementsByClassName('left')[0].clientHeight
+          if (leftAllHeight > leftHeight) {
+            // console.log(leftAllHeight)
+            // console.log(leftHeight)
+            this.status = false
+          }
+          new BetterScroll(this.$refs.le, {
+            movable: this.status,
+            zoom: true,
+            observeDOM: true,
+            click: true
+          })
+        })
       })
     },
     change (item) {
       return require('@/assets/images/icons/' + item)
+    },
+    goScroll (index) {
+      // console.log(index)
+      this.rightBScroll.scrollTo(0, -this.allHight[index], 600)
     }
   },
   created () {
@@ -71,8 +113,19 @@ export default {
   data () {
     return {
       leftData: [],
-      rightData: []
+      rightData: [],
+      rightBScroll: '',
+      allHight: [],
+      status: true
     }
+  },
+  mounted () {
+    this.rightBScroll = new BetterScroll(this.$refs.ri, {
+      movable: true,
+      zoom: true,
+      observeDOM: true,
+      click: true
+    })
   }
 }
 </script>

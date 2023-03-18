@@ -28,7 +28,7 @@
           </div>
         </li>
       </ul>
-      <h2 v-else>暂无数据</h2>
+      <h2 v-else class="none">暂无数据</h2>
     </section>
     <TabBar></TabBar>
   </div>
@@ -192,6 +192,17 @@ export default {
           }
         }
       }
+    }
+    .none{
+      // width: 100vw;
+      text-align: center;
+      font-size:26px;
+      color:#adadad;
+      font-weight:400;
+      padding:10px;
+      margin:0px 30px 10px 30px;
+      font-size:16px;
+      border-bottom:1px solid #adadad;
     }
   }
 }
