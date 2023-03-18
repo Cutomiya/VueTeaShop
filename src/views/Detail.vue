@@ -1,27 +1,55 @@
 <template>
   <div class="detail">
-    <div class="swiper">
-      <swiper :options="swiperOption">
-        <swiper-slide v-for="item in swiperList" :key="item.id">
-          <img :src="item.url" alt="">
-        </swiper-slide>
-      </swiper>
-      <div class="swiper-pagination"></div>
-    </div>
-    <div class="name">
-      <h1>这里是商品名字</h1>
-      <div>商品介绍</div>
-    </div>
-    <div class="price">
-      <div class="box1">
-        <span>￥</span>
-        <b>233</b>
+    <header>
+      <div class="return" v-show="isShow">
+        <i class="iconfont icon-fanhui"></i>
+        <i class="iconfont icon-fangdajing"></i>
       </div>
-      <div class="box2">
-        <span>￥</span>
-        <del>666</del>
+      <div class="bar" v-show="!isShow" :style="styleOption">
+        <div class="fanhui">
+          <i class="iconfont icon-fanhui"></i>
+        </div>
+        <div class="about">
+          <span>商品详情</span>
+          <span>商品评价</span>
+        </div>
+        <div class="look">
+          <i class="iconfont icon-fangdajing"></i>
+        </div>
       </div>
-    </div>
+    </header>
+    <section ref="middle">
+      <div class="box">
+        <div class="swiper">
+          <swiper :options="swiperOption">
+            <swiper-slide v-for="item in swiperList" :key="item.id">
+              <img :src="item.url" alt="">
+            </swiper-slide>
+          </swiper>
+          <div class="swiper-pagination"></div>
+        </div>
+        <div class="name">
+          <h1>这里是商品名字</h1>
+          <div>商品介绍</div>
+        </div>
+        <div class="price">
+          <div class="box1">
+            <span>￥</span>
+            <b>233</b>
+          </div>
+          <div class="box2">
+            <span>价格:</span>
+            <del>￥666</del>
+          </div>
+        </div>
+        <div>
+          <img style="width: 100%;height: 500px;" src="@/assets/images/pic/rec1.jpg" alt="">
+          <img style="width: 100%;height: 500px;" src="@/assets/images/pic/rec2.jpg" alt="">
+          <img style="width: 100%;height: 500px;" src="@/assets/images/pic/rec3.jpg" alt="">
+          <img style="width: 100%;height: 500px;" src="@/assets/images/pic/rec4.jpg" alt="">
+        </div>
+      </div>
+    </section>
     <footer>
         <div class="box1">
           <div>
@@ -48,6 +76,7 @@
 <script>
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import BetterScroll from 'better-scroll'
 export default {
   components: {
     swiper,
@@ -77,14 +106,89 @@ export default {
           id: 3,
           url: require('@/assets/images/pic/rec3.jpg')
         }
-      ]
+      ],
+      isShow: true,
+      betterScroll: [],
+      styleOption: {}
     }
+  },
+  mounted () {
+    this.betterScroll = new BetterScroll(this.$refs.middle, {
+      movable: true,
+      zoom: true,
+      observeDOM: true,
+      click: true,
+      bounce: false, // 取消回弹
+      probeType: 3 // 默认为0不派发scroll事件
+    })
+    this.betterScroll.on('scroll', (pos) => {
+      let height = Math.abs(pos.y)
+      let opa = height / 200
+      opa = opa > 1 ? 1 : opa
+      // console.log(opa)
+      this.styleOption = {
+        opacity: opa
+      }
+      if (height > 50) {
+        this.isShow = false
+      } else {
+        this.isShow = true
+      }
+    })
   }
 }
 </script>
 
 <style lang="less" scoped>
 .detail{
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  header{
+    position:fixed;
+    width: 100%;
+    height: 46px;
+    top:0px;
+    left:0px;
+    z-index:999;
+    .return{
+      width: 100%;
+      height: 46px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      i{
+        margin:10px;
+        width: 36px;
+        height: 36px;
+        font-size:20px;
+        text-align: center;
+        line-height: 36px;
+        color:#fff;
+        background-color: rgba(0,0,0,0.3);
+        border-radius: 20px;
+      }
+    }
+    .bar{
+      background-color: #fff;
+      width: 100%;
+      height: 46px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .about{
+        font-size:18px;
+        span{
+          padding:10px;
+        }
+      }
+      i{
+        font-size:20px;
+        padding:10px;
+      }
+    }
+  }
   .swiper{
     // touch-action: none;
     position: relative;
@@ -183,8 +287,12 @@ export default {
     }
     .box2{
       color:#999999;
-      font-size:16px;
+      font-size:14px;
     }
+  }
+  section{
+    flex: 1;
+    overflow: hidden;
   }
 }
 </style>
