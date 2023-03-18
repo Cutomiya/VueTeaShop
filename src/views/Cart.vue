@@ -129,7 +129,7 @@ export default {
     currentIndex () {
       return this.allHight.findIndex((item, index) => {
         // console.log(item, index)
-        return this.scrollY >= item && this.scrollY <= this.allHight[index + 1]
+        return this.scrollY >= item && this.scrollY < this.allHight[index + 1]
       })
     }
   },

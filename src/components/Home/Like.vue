@@ -4,7 +4,7 @@
       <span>猜你喜欢</span>
     </Card>
     <ul>
-      <li v-for="item in likeList" :key="item.id">
+      <li v-for="item in likeList" :key="item.id" @click="goDetail">
         <h2>
           <img v-lazy="change(item.url)" alt="">
         </h2>
@@ -56,6 +56,11 @@ export default {
   methods: {
     change (item) {
       return require('@/assets/images/pic/' + item)
+    },
+    goDetail () {
+      this.$router.push({
+        path: '/detail'
+      })
     }
   }
 }

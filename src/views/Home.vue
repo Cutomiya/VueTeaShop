@@ -91,7 +91,8 @@ export default {
     new BetterScroll(this.$refs.wrapper, {
       movable: true,
       zoom: true,
-      observeDOM: true
+      observeDOM: true,
+      click: true
     })
   },
   created () {
