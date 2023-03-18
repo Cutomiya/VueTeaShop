@@ -15,7 +15,7 @@
     <section ref="box">
       <div class="left" ref="le">
         <ul class="leftList">
-          <li v-for="item in leftData" :key="item.id" @click="goScroll(item.id)">{{ item.name }}</li>
+          <li v-for="item in leftData" :key="item.id" @click="goScroll(item.id)" :class="{active:item.id === currentIndex}">{{ item.name }}</li>
         </ul>
       </div>
       <div class="right" ref="ri">
@@ -96,6 +96,11 @@ export default {
             observeDOM: true,
             click: true
           })
+          // 右侧驱动左侧
+          this.rightBScroll.on('scroll', (pos) => {
+            // console.log(pos)
+            this.scrollY = Math.abs(pos.y)
+          })
         })
       })
     },
@@ -115,8 +120,17 @@ export default {
       leftData: [],
       rightData: [],
       rightBScroll: '',
-      allHight: [],
-      status: true
+      allHight: [], // 记录每一个元素的高度和初始高度0
+      status: true,
+      scrollY: '' // 右侧滚动距离
+    }
+  },
+  computed: {
+    currentIndex () {
+      return this.allHight.findIndex((item, index) => {
+        // console.log(item, index)
+        return this.scrollY >= item && this.scrollY <= this.allHight[index + 1]
+      })
     }
   },
   mounted () {
@@ -124,7 +138,8 @@ export default {
       movable: true,
       zoom: true,
       observeDOM: true,
-      click: true
+      click: true,
+      probeType: 3 // 默认为0不派发scroll事件
     })
   }
 }
