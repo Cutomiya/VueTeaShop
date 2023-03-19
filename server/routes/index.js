@@ -4,6 +4,11 @@ const cors = require('cors')
 const connention = require('../dataBase/sql')
 app.use(cors())
 
+app.get('/api/goods/id', (req, res, next) => {
+  let id = req.params.id
+  console.log(id)
+})
+
 // 分类栏的接口
 app.get('/api/goods/cartList', (req, res, next) => {
   res.send({
@@ -165,7 +170,6 @@ app.get('/api/goods/shopList', (req, res, next) => {
   })
 })
 
-// 首页的数据
 app.get('/api/index_list/1/data/1', (req, res, next) => {
   res.send({
     data: [
@@ -209,6 +213,7 @@ app.get('/api/index_list/1/data/1', (req, res, next) => {
   })
 })
 
+// 首页的数据
 app.get('/api/index_list/0/data/1', (req, res, next) => {
   res.send({
     code: 0,

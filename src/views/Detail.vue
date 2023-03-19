@@ -1,7 +1,7 @@
 <template>
   <div class="detail">
     <header>
-      <div class="return" v-show="isShow">
+      <div class="return" v-show="isShow" @click="back">
         <i class="iconfont icon-fanhui"></i>
         <i class="iconfont icon-fangdajing"></i>
       </div>
@@ -135,6 +135,14 @@ export default {
         this.isShow = true
       }
     })
+  },
+  methods: {
+    back () {
+      this.$router.back()
+    }
+  },
+  created () {
+    console.log(this.$route.params.id)
   }
 }
 </script>
