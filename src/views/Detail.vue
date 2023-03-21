@@ -5,7 +5,7 @@
         <i class="iconfont icon-fanhui"></i>
         <i class="iconfont icon-fangdajing"></i>
       </div>
-      <div class="bar" v-show="!isShow" :style="styleOption">
+      <div class="bar" v-show="!isShow" :style="styleOption" @click="back">
         <div class="fanhui">
           <i class="iconfont icon-fanhui"></i>
         </div>
@@ -29,13 +29,13 @@
           <div class="swiper-pagination"></div>
         </div>
         <div class="name">
-          <h1>这里是商品名字</h1>
-          <div>商品介绍</div>
+          <h1>{{ dataList.name }}</h1>
+          <div>{{ dataList.content }}</div>
         </div>
         <div class="price">
           <div class="box1">
             <span>￥</span>
-            <b>233</b>
+            <b>{{ dataList.price }}</b>
           </div>
           <div class="box2">
             <span>价格:</span>
@@ -43,10 +43,9 @@
           </div>
         </div>
         <div>
-          <img style="width: 100%;height: 500px;" src="@/assets/images/pic/rec1.jpg" alt="">
-          <img style="width: 100%;height: 500px;" src="@/assets/images/pic/rec2.jpg" alt="">
-          <img style="width: 100%;height: 500px;" src="@/assets/images/pic/rec3.jpg" alt="">
-          <img style="width: 100%;height: 500px;" src="@/assets/images/pic/rec4.jpg" alt="">
+          <img style="width: 100%;height: 500px;" :src="change(dataList.url)" alt="">
+          <img style="width: 100%;height: 500px;" :src="change(dataList.url)" alt="">
+          <img style="width: 100%;height: 500px;" :src="change(dataList.url)" alt="">
         </div>
       </div>
     </section>
@@ -77,6 +76,7 @@
 import 'swiper/dist/css/swiper.css'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import BetterScroll from 'better-scroll'
+import Http from '@/common/api/request.js'
 export default {
   components: {
     swiper,
@@ -109,40 +109,60 @@ export default {
       ],
       isShow: true,
       betterScroll: [],
-      styleOption: {}
+      styleOption: {},
+      dataList: []
     }
-  },
-  mounted () {
-    this.betterScroll = new BetterScroll(this.$refs.middle, {
-      movable: true,
-      zoom: true,
-      observeDOM: true,
-      click: true,
-      bounce: false, // 取消回弹
-      probeType: 3 // 默认为0不派发scroll事件
-    })
-    this.betterScroll.on('scroll', (pos) => {
-      let height = Math.abs(pos.y)
-      let opa = height / 200
-      opa = opa > 1 ? 1 : opa
-      // console.log(opa)
-      this.styleOption = {
-        opacity: opa
-      }
-      if (height > 50) {
-        this.isShow = false
-      } else {
-        this.isShow = true
-      }
-    })
   },
   methods: {
     back () {
       this.$router.back()
+    },
+    change (item) {
+      // console.log(item)
+      return this.dataList.url && require('@/assets/images/pic/' + item)
+    },
+    async getData () {
+      let id = this.$route.params.id
+      // console.log(id)
+      await Http.$axios({
+        url: '/api/goods/id',
+        params: {
+          id
+        }
+      }).then(res => {
+        // console.log(res.data[0])
+        this.dataList = res.data[0]
+        // console.log(this.dataList)
+        setTimeout(() => {
+          this.betterScroll = new BetterScroll(this.$refs.middle, {
+            movable: true,
+            zoom: true,
+            observeDOM: true,
+            click: true,
+            bounce: false, // 取消回弹
+            probeType: 3 // 默认为0不派发scroll事件
+          })
+          this.betterScroll.on('scroll', (pos) => {
+            let height = Math.abs(pos.y)
+            let opa = height / 200
+            opa = opa > 1 ? 1 : opa
+            // console.log(opa)
+            this.styleOption = {
+              opacity: opa
+            }
+            if (height > 50) {
+              this.isShow = false
+            } else {
+              this.isShow = true
+            }
+          })
+        })
+      })
     }
   },
   created () {
-    console.log(this.$route.params.id)
+    // console.log(this.$route.params.id)
+    this.getData()
   }
 }
 </script>

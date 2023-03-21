@@ -58,6 +58,7 @@ export default {
       return require('@/assets/images/pic/' + item)
     },
     goDetail (id) {
+      // console.log(id)
       this.$router.push({
         // path: '/detail', // 这种是显式获取数据
         // query: {

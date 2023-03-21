@@ -5,8 +5,15 @@ const connention = require('../dataBase/sql')
 app.use(cors())
 
 app.get('/api/goods/id', (req, res, next) => {
-  let id = req.params.id
-  console.log(id)
+  let id = req.query.id
+  // console.log(id)
+  connention.query('select * from goodslist where id=' + id + '', (error, results) => {
+    if (error) { throw error }
+    res.json({
+      code: 0,
+      data: results
+    })
+  })
 })
 
 // 分类栏的接口
