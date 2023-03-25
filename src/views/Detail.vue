@@ -5,8 +5,8 @@
         <i class="iconfont icon-fanhui"></i>
         <i class="iconfont icon-fangdajing"></i>
       </div>
-      <div class="bar" v-show="!isShow" :style="styleOption" @click="back">
-        <div class="fanhui">
+      <div class="bar" v-show="!isShow" :style="styleOption">
+        <div class="fanhui" @click="back">
           <i class="iconfont icon-fanhui"></i>
         </div>
         <div class="about">
@@ -110,7 +110,8 @@ export default {
       isShow: true,
       betterScroll: [],
       styleOption: {},
-      dataList: []
+      dataList: [],
+      id: 0
     }
   },
   methods: {
@@ -160,9 +161,15 @@ export default {
       })
     }
   },
-  created () {
-    // console.log(this.$route.params.id)
-    this.getData()
+  // created () {
+  //   this.id = this.$route.params.id
+  //   this.getData()
+  // },
+  activated () {
+    if (this.$route.params.id !== this.id) {
+      this.getData()
+      this.id = this.$route.params.id
+    }
   }
 }
 </script>
