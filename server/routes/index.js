@@ -3,10 +3,10 @@ const app = express()
 const cors = require('cors')
 const connention = require('../dataBase/sql')
 app.use(cors())
+let id
 
 app.get('/api/goods/id', (req, res, next) => {
-  let id = req.query.id
-  // console.log(id)
+  if (req.query.id) id = req.query.id
   connention.query('select * from goodslist where id=' + id + '', (error, results) => {
     if (error) { throw error }
     res.json({
@@ -167,7 +167,7 @@ app.get('/api/goods/shopList', (req, res, next) => {
   // res.send({})
   let [searchName, orderName] = Object.keys(req.query)
   let [name, order] = Object.values(req.query)
-  console.log(searchName, orderName, name, order)
+  // console.log(searchName, orderName, name, order)
   connention.query('select * from goodslist where name like "%' + name + '%" order by ' + orderName + ' ' + order + '', (error, results) => {
     if (error) return console.log(error.message)
     res.send({
