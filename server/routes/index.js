@@ -2,9 +2,52 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 const connention = require('../dataBase/sql')
+const user = require('../dataBase/userSql')
 app.use(cors())
 let id
 
+app.post('/api/login', (req, res, next) => {
+  let params = {
+    userTel: req.query.userTel,
+    userPwd: req.query.userPwd
+  }
+  connention.query(user.queryUserTel(params), (err, results) => {
+    if (err) return
+    if (results.length > 0) {
+      connention.query(user.queryUserPwd(params), (err, result) => {
+        if (err) return
+        if (result.length > 0) {
+          res.send({
+            code: 200,
+            data: {
+              success: true,
+              msg: '登录成功',
+              darta: res[0]
+            }
+          })
+        } else {
+          res.send({
+            code: 302,
+            data: {
+              success: false,
+              msg: '密码不正确'
+            }
+          })
+        }
+      })
+    } else {
+      res.send({
+        code: 301,
+        data: {
+          success: false,
+          msg: '手机号不存在'
+        }
+      })
+    }
+  })
+})
+
+// 商品详情页
 app.get('/api/goods/id', (req, res, next) => {
   if (req.query.id) id = req.query.id
   connention.query('select * from goodslist where id=' + id + '', (error, results) => {

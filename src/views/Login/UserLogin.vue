@@ -3,12 +3,12 @@
     <Header></Header>
     <section class="section">
       <div class="tel">
-        <input type="text" placeholder="请输入手机号" pattern="[0-9]*">
+        <input type="text" v-model="userTel" placeholder="请输入手机号" pattern="[0-9]*">
       </div>
       <div class="mess">
-        <input type="text" placeholder="请输入密码" pattern="[0-9]*">
+        <input type="text" v-model="userPwd" placeholder="请输入密码" pattern="[0-9]*">
       </div>
-      <div class="btn">登 录</div>
+      <div class="btn" @click="login">登 录</div>
       <div class="tab">
         <span @click="goUserLogin">短信登录</span>
         <span>找回密码</span>
@@ -22,6 +22,8 @@
 <script>
 import tabBar from '@/components/common/TabBar.vue'
 import Header from '@/views/Login/Header.vue'
+import { Toast } from 'mint-ui'
+import Http from '@/common/api/request.js'
 export default {
   name: 'UserLogin',
   components: {
@@ -31,6 +33,48 @@ export default {
   methods: {
     goUserLogin () {
       this.$router.push('/login')
+    },
+    login () {
+      if (!this.validate('userTel')) {
+        return false
+      }
+      if (!this.validate('userPwd')) {
+        return false
+      }
+      Http.$axios({
+        url: '/api/login',
+        method: 'POST',
+        params: {
+          userTel: this.userTel,
+          userPwd: this.userPwd
+        }
+      }).then(res => {
+        Toast(res.data.msg)
+        if (!res.success) return false
+      })
+    },
+    validate (key) {
+      if (!this.rule[key].rule.test(this[key])) {
+        Toast(this.rule[key].msg)
+        return false
+      }
+      return true
+    }
+  },
+  data () {
+    return {
+      rule: { // 验证规则
+        userTel: {
+          rule: /^1[23456789]\d{9}$/,
+          msg: '手机号不能为空，并且是11位数字'
+        },
+        userPwd: {
+          rule: /^\w{6,12}$/,
+          msg: '密码不能为空，并且要求6~12位'
+        }
+      },
+      userTel: '',
+      userPwd: ''
     }
   }
 }
