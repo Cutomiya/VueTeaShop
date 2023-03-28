@@ -3,11 +3,11 @@
     <Header></Header>
     <section class="section">
       <div class="tel">
-        <input type="text" placeholder="请输入手机号" pattern="[0-9]*">
+        <input type="text" v-model="userTel" placeholder="请输入手机号" pattern="[0-9]*">
       </div>
       <div class="mess">
         <input type="text" placeholder="请输入短信验证码" pattern="[0-9]*">
-        <button>获取短信验证码</button>
+        <button @click="getMess" :disabled="disabled">{{codeMsg}}</button>
       </div>
       <div class="btn">登 录</div>
       <div class="tab">
@@ -22,6 +22,8 @@
 <script>
 import tabBar from '@/components/common/TabBar.vue'
 import Header from '@/views/Login/Header.vue'
+import { Toast } from 'mint-ui'
+import Http from '@/common/api/request.js'
 export default {
   name: 'Login',
   components: {
@@ -29,11 +31,45 @@ export default {
     Header
   },
   data () {
-    return {}
+    return {
+      userTel: '',
+      rule: { // 验证规则
+        userTel: {
+          rule: /^1[23456789]\d{9}$/,
+          msg: '手机号不能为空，并且是11位数字'
+        }
+      },
+      disabled: false,
+      codeNum: 6,
+      codeMsg: '获取短信验证码'
+    }
   },
   methods: {
     goUserLogin () {
       this.$router.push('/userLogin')
+    },
+    getMess () {
+      if (!this.validate('userTel')) {
+        return false
+      }
+      this.disabled = true
+      let timer = setInterval(() => {
+        --this.codeNum
+        this.codeMsg = `重新发送 ${this.codeNum}`
+      }, 1000)
+      setTimeout(() => {
+        clearInterval(timer)
+        this.codeNum = 6
+        this.disabled = false
+        this.codeMsg = '获取短信验证码'
+      }, 6000)
+    },
+    validate (key) {
+      if (!this.rule[key].rule.test(this[key])) {
+        Toast(this.rule[key].msg)
+        return false
+      }
+      return true
     }
   }
 }
