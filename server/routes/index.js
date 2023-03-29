@@ -8,6 +8,44 @@ const user = require('../dataBase/userSql')
 app.use(cors())
 let id
 
+app.post('/api/register', (req, res, next) => {
+  let data = {
+    userTel: req.query.userTel,
+    userPwd: req.query.userPwd
+  }
+  connention.query(user.queryUserTel(data), (err, results) => {
+    if (err) console.log(err)
+    if (results.length > 0) { // 用户存在
+      res.send({
+        code: 200,
+        data: {
+          success: true,
+          msg: '用户已存在',
+          data: results[0]
+        }
+      })
+    } else {
+      connention.query(user.insertData(data), (e, result) => {
+        if (e) console.log(e)
+        connention.query(user.queryUserTel(data), (error, resu) => {
+          if (error) console.log(error)
+          if (resu.length > 0) { // 用户存在
+            res.send({
+              code: 200,
+              data: {
+                success: true,
+                msg: '注册成功',
+                data: resu[0]
+              }
+            })
+          }
+        })
+      })
+    }
+  })
+})
+
+// 用户登录
 app.post('/api/addUser', (req, res, next) => {
   let tel = {
     userTel: req.query.userTel
@@ -27,16 +65,19 @@ app.post('/api/addUser', (req, res, next) => {
     } else {
       connention.query(user.insertData(tel), (e, result) => {
         if (e) console.log(e)
-        if (result.length > 0) { // 用户存在
-          res.send({
-            code: 200,
-            data: {
-              success: true,
-              msg: '登录成功',
-              data: result[0]
-            }
-          })
-        }
+        connention.query(user.queryUserTel(tel), (error, resu) => {
+          if (error) console.log(error)
+          if (resu.length > 0) { // 用户存在
+            res.send({
+              code: 200,
+              data: {
+                success: true,
+                msg: '登录成功',
+                data: resu[0]
+              }
+            })
+          }
+        })
       })
     }
   })

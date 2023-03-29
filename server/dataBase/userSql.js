@@ -8,7 +8,8 @@ const User = {
   },
   insertData (option) {
     let userTel = option.userTel
-    return 'insert into user (tel,pwd,imgUrl,nickName,token) values ("' + userTel + '","666666","1.jpg","","")'
+    let userPwd = option.userPwd || '666666'
+    return 'insert into user (tel,pwd,imgUrl,nickName,token) values ("' + userTel + '","' + userPwd + '","1.jpg","","")'
   }
 }
 

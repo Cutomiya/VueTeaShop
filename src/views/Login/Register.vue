@@ -1,19 +1,24 @@
 <template>
   <div class="login container">
-    <Header></Header>
+    <Header>
+      <span>注册</span>
+    </Header>
     <section class="section">
       <div class="tel">
         <input type="text" v-model="userTel" placeholder="请输入手机号" pattern="[0-9]*">
+      </div>
+      <div class="check">
+        <input type="text" placeholder="请输入图形验证码" pattern="[0-9]*">
+        <div style="width: 30%; height: 100%; background-color: red;"></div>
       </div>
       <div class="mess">
         <input type="text" placeholder="请输入短信验证码" pattern="[0-9]*">
         <button @click="getMess" :disabled="disabled">{{codeMsg}}</button>
       </div>
-      <div class="btn" @click="login">登 录</div>
-      <div class="tab">
-        <span @click="goUserLogin">密码登录</span>
-        <span @click="register">快速注册</span>
+      <div>
+        <input v-model="userPwd" type="text" placeholder="请设置密码" pattern="[0-9]*" style="width: 100%;">
       </div>
+      <div class="btn" @click="login">注 册</div>
     </section>
     <tabBar></tabBar>
   </div>
@@ -37,11 +42,16 @@ export default {
         userTel: {
           rule: /^1[23456789]\d{9}$/,
           msg: '手机号不能为空，并且是11位数字'
+        },
+        userPwd: {
+          rule: /^\w{6,12}$/,
+          msg: '密码不能为空，并且要求6~12位'
         }
       },
       disabled: false,
       codeNum: 6,
-      codeMsg: '获取短信验证码'
+      codeMsg: '获取短信验证码',
+      userPwd: ''
     }
   },
   methods: {
@@ -83,20 +93,21 @@ export default {
       if (!this.validate('userTel')) {
         return false
       }
+      if (!this.validate('userPwd')) {
+        return false
+      }
       Http.$axios({
-        url: '/api/addUser',
+        url: '/api/register',
         method: 'POST',
         params: {
-          userTel: this.userTel
+          userTel: this.userTel,
+          userPwd: this.userPwd
         }
       }).then(res => {
         Toast(res.data.msg)
         console.log(res)
         if (!res.success) return false
       })
-    },
-    register () {
-      this.$router.push('/Register')
     }
   }
 }
@@ -126,6 +137,15 @@ section{
       width: 100%;
     }
   }
+  .check{
+    display: flex;
+    input{
+      flex:1;
+    }
+    div{
+      margin:0;
+    }
+  }
   .mess{
     display:flex;
     input{
@@ -149,11 +169,6 @@ section{
     font-size: 20px;
     border-radius: 6px;
     text-align: center;
-  }
-  .tab{
-    display: flex;
-    justify-content:space-between;
-    font-size:16px;
   }
 }
 </style>

@@ -12,7 +12,7 @@
       <div class="tab">
         <span @click="goUserLogin">短信登录</span>
         <span>找回密码</span>
-        <span>快速注册</span>
+        <span @click="register">快速注册</span>
       </div>
     </section>
     <tabBar></tabBar>
@@ -59,6 +59,9 @@ export default {
         return false
       }
       return true
+    },
+    register () {
+      this.$router.push('/Register')
     }
   },
   data () {

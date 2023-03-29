@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="return">
-      <i class="iconfont icon-fanhui"></i>
+      <i class="iconfont icon-fanhui" @click="re"></i>
     </div>
     <div>
       <slot>
@@ -16,7 +16,11 @@
 
 <script>
 export default {
-
+  methods: {
+    re () {
+      this.$router.back()
+    }
+  }
 }
 </script>
 
