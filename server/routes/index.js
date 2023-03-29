@@ -3,9 +3,73 @@ const app = express()
 const cors = require('cors')
 const connention = require('../dataBase/sql')
 const user = require('../dataBase/userSql')
+// const QcloudSms = require('qcouldsms_js')
+
 app.use(cors())
 let id
 
+app.post('/api/addUser', (req, res, next) => {
+  let tel = {
+    userTel: req.query.userTel
+  }
+  // console.log(tel);
+  connention.query(user.queryUserTel(tel), (err, results) => {
+    if (err) console.log(err)
+    if (results.length > 0) { // 用户存在
+      res.send({
+        code: 200,
+        data: {
+          success: true,
+          msg: '登录成功',
+          data: results[0]
+        }
+      })
+    } else {
+      connention.query(user.insertData(tel), (e, result) => {
+        if (e) console.log(e)
+        if (result.length > 0) { // 用户存在
+          res.send({
+            code: 200,
+            data: {
+              success: true,
+              msg: '登录成功',
+              data: result[0]
+            }
+          })
+        }
+      })
+    }
+  })
+})
+
+// 账户手机验证
+app.post('/api/code', (req, res, next) => {
+  // let tel = req.query.userTel
+  // let QcloudSms = require('qcloudsms_js')
+  // // 短信应用SDK AppID
+  // let appid = 1400806813 // SDK AppID是1400开头
+  // // 短信应用SDK AppKey
+  // let appkey = '9ff91d87c2cd7cd0ea762f141975d1df37481d48700d70ac37470aefc60f9bad'
+  // // 需要发送短信的手机号码
+  // let phoneNumbers = [tel]
+  // // 短信模板ID，需要在短信应用中申请
+  // let templateId = 7839 // NOTE: 这里的模板ID`7839`只是一个示例，真实的模板ID需要在短信控制台中申请
+  // // 签名
+  // let smsSign = '腾讯云' // NOTE: 这里的签名只是示例，请使用真实的已申请的签名, 签名参数使用的是`签名内容`，而不是`签名ID`
+  // // 实例化QcloudSms
+  // let qcloudsms = QcloudSms(appid, appkey)
+  // // 设置请求回调处理, 这里只是演示，用户需要自定义相应处理回调
+  // function callback(err, res, resData) {
+  //   if (err) {
+  //     console.log('err: ', err)
+  //   } else {
+  //     console.log('request data: ', res.req)
+  //     console.log('response data: ', resData)
+  //   }
+  // }
+})
+
+// 账户密码验证
 app.post('/api/login', (req, res, next) => {
   let params = {
     userTel: req.query.userTel,
@@ -208,6 +272,7 @@ app.get('/api/goods/cartList', (req, res, next) => {
 // 搜索栏的数据
 app.get('/api/goods/shopList', (req, res, next) => {
   // res.send({})
+  // eslint-disable-next-line no-unused-vars
   let [searchName, orderName] = Object.keys(req.query)
   let [name, order] = Object.values(req.query)
   // console.log(searchName, orderName, name, order)

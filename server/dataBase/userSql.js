@@ -5,6 +5,10 @@ const User = {
   },
   queryUserPwd (option) {
     return 'select * from user where (tel = ' + option.userTel + ') and pwd = ' + option.userPwd + ''
+  },
+  insertData (option) {
+    let userTel = option.userTel
+    return 'insert into user (tel,pwd,imgUrl,nickName,token) values ("' + userTel + '","666666","1.jpg","","")'
   }
 }
 

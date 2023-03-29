@@ -9,7 +9,7 @@
         <input type="text" placeholder="请输入短信验证码" pattern="[0-9]*">
         <button @click="getMess" :disabled="disabled">{{codeMsg}}</button>
       </div>
-      <div class="btn">登 录</div>
+      <div class="btn" @click="login">登 录</div>
       <div class="tab">
         <span @click="goUserLogin">密码登录</span>
         <span>快速注册</span>
@@ -52,6 +52,14 @@ export default {
       if (!this.validate('userTel')) {
         return false
       }
+      Http.$axios({
+        url: '/api/code',
+        method: 'POST',
+        params: {
+          userTel: this.userTel
+        }
+      }).then(res => {
+      })
       this.disabled = true
       let timer = setInterval(() => {
         --this.codeNum
@@ -70,6 +78,22 @@ export default {
         return false
       }
       return true
+    },
+    login () {
+      if (!this.validate('userTel')) {
+        return false
+      }
+      Http.$axios({
+        url: '/api/addUser',
+        method: 'POST',
+        params: {
+          userTel: this.userTel
+        }
+      }).then(res => {
+        Toast(res.data.msg)
+        console.log(res)
+        if (!res.success) return false
+      })
     }
   }
 }
