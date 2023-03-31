@@ -1,6 +1,6 @@
 <template>
-  <div class="List">
-    订单
+  <div class="List container">
+    <section class="section">订单</section>
     <tabBar></tabBar>
   </div>
 </template>

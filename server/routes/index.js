@@ -8,6 +8,55 @@ const user = require('../dataBase/userSql')
 app.use(cors())
 let id
 
+app.post('/api/setPassword', (req, res, next) => {
+  let data = {
+    userTel: req.query.userTel,
+    userPwd: req.query.userPwd
+  }
+  connention.query(user.queryUserTel(data), (err, re) => {
+    if (err) console.log(err)
+    let id = re[0].id
+    let pwd = re[0].pwd
+    connention.query(`update user set pwd = replace(pwd, ${pwd}, ${data.userPwd}) where id = ${id}`, (er, r) => {
+      if (er) console.log(er)
+      res.send({
+        code: 200,
+        data: {
+          success: true,
+          msg: '修改成功'
+        }
+      })
+    })
+  })
+})
+
+// 查询用户手机号
+app.post('/api/selectUser', (req, res, next) => {
+  // console.log(req.query)
+  let tel = req.query
+  connention.query(user.queryUserTel(tel), (err, result) => {
+    if (err) console.log(err)
+    if (result.length > 0) {
+      res.send({
+        code: 200,
+        data: {
+          success: true,
+          msg: '用户存在'
+        }
+      })
+    } else {
+      res.send({
+        code: 200,
+        data: {
+          success: false,
+          msg: '用户不存在'
+        }
+      })
+    }
+  })
+})
+
+// 用户注册
 app.post('/api/register', (req, res, next) => {
   let data = {
     userTel: req.query.userTel,

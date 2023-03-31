@@ -41,7 +41,7 @@ export default {
       rule: { // 验证规则
         userTel: {
           rule: /^1[23456789]\d{9}$/,
-          msg: '手机号不能为空，并且是11位数字'
+          msg: '手机号不能为空，并且是以1开头的11位数字'
         },
         userPwd: {
           rule: /^\w{6,12}$/,

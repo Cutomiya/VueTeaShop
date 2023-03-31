@@ -1,6 +1,8 @@
 <template>
-  <div class="login container">
-    <Header></Header>
+  <div class="box container">
+    <Header>
+      <span>找回密码</span>
+    </Header>
     <section class="section">
       <div class="tel">
         <input type="text" v-model="userTel" placeholder="请输入手机号" pattern="[0-9]*">
@@ -9,11 +11,7 @@
         <input type="text" placeholder="请输入短信验证码" pattern="[0-9]*">
         <button @click="getMess" :disabled="disabled">{{codeMsg}}</button>
       </div>
-      <div class="btn" @click="login">登 录</div>
-      <div class="tab">
-        <span @click="goUserLogin">密码登录</span>
-        <span @click="register">快速注册</span>
-      </div>
+      <div class="btn" @click="next">下 一 步</div>
     </section>
     <tabBar></tabBar>
   </div>
@@ -25,11 +23,6 @@ import Header from '@/views/Login/Header.vue'
 import { Toast } from 'mint-ui'
 import Http from '@/common/api/request.js'
 export default {
-  name: 'Login',
-  components: {
-    tabBar,
-    Header
-  },
   data () {
     return {
       userTel: '',
@@ -44,21 +37,51 @@ export default {
       codeMsg: '获取短信验证码'
     }
   },
+  components: {
+    tabBar,
+    Header
+  },
   methods: {
-    goUserLogin () {
-      this.$router.push('/userLogin')
+    next () {
+      if (!this.validate('userTel')) {
+        return false
+      }
+      Http.$axios({
+        url: '/api/selectUser',
+        method: 'POST',
+        params: {
+          userTel: this.userTel
+        }
+      }).then(res => {
+        if (!res.data.success) {
+          Toast(res.data.msg)
+          return false
+        } else {
+          this.$router.push({
+            name: 'RecoverNext',
+            params: {
+              userTel: this.userTel
+            }
+          })
+        }
+      })
     },
     getMess () {
       if (!this.validate('userTel')) {
         return false
       }
       Http.$axios({
-        url: '/api/code',
+        url: '/api/selectUser',
         method: 'POST',
         params: {
           userTel: this.userTel
         }
-      }).then(res => {})
+      }).then(res => {
+        if (!res.data.success) {
+          Toast(res.data.msg)
+          return false
+        }
+      })
       this.disabled = true
       let timer = setInterval(() => {
         --this.codeNum
@@ -77,25 +100,6 @@ export default {
         return false
       }
       return true
-    },
-    login () {
-      if (!this.validate('userTel')) {
-        return false
-      }
-      Http.$axios({
-        url: '/api/addUser',
-        method: 'POST',
-        params: {
-          userTel: this.userTel
-        }
-      }).then(res => {
-        Toast(res.data.msg)
-        console.log(res)
-        if (!res.success) return false
-      })
-    },
-    register () {
-      this.$router.push('/Register')
     }
   }
 }
@@ -148,11 +152,6 @@ section{
     font-size: 20px;
     border-radius: 6px;
     text-align: center;
-  }
-  .tab{
-    display: flex;
-    justify-content:space-between;
-    font-size:16px;
   }
 }
 </style>

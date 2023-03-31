@@ -72,6 +72,24 @@ const routes = [
     name: 'Register',
     component: () =>
       import('../views/Login/Register.vue')
+  },
+  {
+    path: '/recover',
+    children: [
+      {
+        path: '/',
+        name: 'Recover',
+        component: () =>
+          import('../views/Login/Recovery/RecoverIndex.vue')
+      }, {
+        path: '/next',
+        name: 'RecoverNext',
+        component: () =>
+          import('../views/Login/Recovery/RecoveryNext.vue')
+      }
+    ],
+    component: () =>
+      import('../views/Login/Recovery/Recovery.vue')
   }
 ]
 
