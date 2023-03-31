@@ -105,8 +105,8 @@ export default {
         }
       }).then(res => {
         Toast(res.data.msg)
-        console.log(res)
-        if (!res.success) return false
+        // console.log(res)
+        if (res.data.success) this.$router.push({ path: '/login' })
       })
     }
   }

@@ -24,6 +24,7 @@ import tabBar from '@/components/common/TabBar.vue'
 import Header from '@/views/Login/Header.vue'
 import { Toast } from 'mint-ui'
 import Http from '@/common/api/request.js'
+import { mapMutations } from 'vuex'
 export default {
   name: 'UserLogin',
   components: {
@@ -31,6 +32,7 @@ export default {
     Header
   },
   methods: {
+    ...mapMutations(['LOGIN']),
     goUserLogin () {
       this.$router.push('/login')
     },
@@ -50,7 +52,9 @@ export default {
         }
       }).then(res => {
         Toast(res.data.msg)
-        if (!res.success) return false
+        if (!res.data.success) return false
+        this.LOGIN(res.data.data) // 将数据存储到vuex里
+        this.$router.push({ path: '/my' })
       })
     },
     validate (key) {

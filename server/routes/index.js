@@ -8,6 +8,7 @@ const user = require('../dataBase/userSql')
 app.use(cors())
 let id
 
+// 找回密码
 app.post('/api/setPassword', (req, res, next) => {
   let data = {
     userTel: req.query.userTel,
@@ -176,7 +177,7 @@ app.post('/api/login', (req, res, next) => {
             data: {
               success: true,
               msg: '登录成功',
-              darta: res[0]
+              data: result[0]
             }
           })
         } else {

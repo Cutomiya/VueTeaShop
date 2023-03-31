@@ -1,11 +1,16 @@
 <template>
   <div class="my">
     <header>
-      <div class="login" @click="login">登录/注册</div>
+      <div class="login" @click="login" v-if="!loginStatus">登录/注册</div>
+      <div class="userInfo" v-if="loginStatus">
+        <img :src="change(userInfo.imgUrl)" alt="">
+        <span>{{ userInfo.nickname }}</span>
+      </div>
     </header>
     <section>
       <ul>
         <li>地址管理</li>
+        <li @click="loginOut">退出登录</li>
       </ul>
     </section>
     <tabBar></tabBar>
@@ -14,12 +19,23 @@
 
 <script>
 import tabBar from '@/components/common/TabBar.vue'
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: 'My',
   components: {
     tabBar
   },
+  computed: {
+    ...mapState({
+      userInfo: state => state.user.userInfo,
+      loginStatus: state => state.user.loginStatus
+    })
+  },
   methods: {
+    ...mapMutations(['loginOut']),
+    change (item) {
+      return require('@/assets/images/icons/' + item)
+    },
     login () {
       this.$router.push('/login')
     }
@@ -47,6 +63,22 @@ export default {
         border-radius: 6px;
         font-size: 18px;
         padding:4px 8px;
+      }
+      .userInfo{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        img{
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          border:3px solid white;
+        }
+        span{
+          padding-top:6px;
+          color:white;
+        }
       }
     }
     section{
