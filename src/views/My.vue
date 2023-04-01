@@ -73,7 +73,7 @@ export default {
           width: 80px;
           height: 80px;
           border-radius: 50%;
-          border:3px solid white;
+          // border:3px solid white;
         }
         span{
           padding-top:6px;

@@ -1,6 +1,6 @@
 <template>
   <div class="cart">
-    <header>
+    <header v-show="isShow">
       <div class="return">
         <i class="iconfont icon-fanhui"></i>
       </div>
@@ -100,6 +100,11 @@ export default {
           this.rightBScroll.on('scroll', (pos) => {
             // console.log(pos)
             this.scrollY = Math.abs(pos.y)
+            if (Math.abs(pos.y) >= 50) {
+              this.isShow = false
+            } else {
+              this.isShow = true
+            }
           })
         })
       })
@@ -117,6 +122,7 @@ export default {
   },
   data () {
     return {
+      isShow: true,
       leftData: [],
       rightData: [],
       rightBScroll: '',
@@ -139,6 +145,7 @@ export default {
       zoom: true,
       observeDOM: true,
       click: true,
+      bounce: false,
       probeType: 3 // 默认为0不派发scroll事件
     })
   }
