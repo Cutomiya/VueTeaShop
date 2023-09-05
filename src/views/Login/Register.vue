@@ -105,6 +105,8 @@ export default {
         }
       }).then(res => {
         Toast(res.data.msg)
+        this.userPwd = ''
+        this.userTel = ''
         // console.log(res)
         if (res.data.success) this.$router.push({ path: '/login' })
       })

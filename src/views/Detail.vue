@@ -1,8 +1,8 @@
 <template>
   <div class="detail">
     <header>
-      <div class="return" v-show="isShow" @click="back">
-        <i class="iconfont icon-fanhui"></i>
+      <div class="return" v-show="isShow">
+        <i class="iconfont icon-fanhui" @click="back"></i>
         <i class="iconfont icon-fangdajing"></i>
       </div>
       <div class="bar" v-show="!isShow" :style="styleOption">
@@ -65,7 +65,7 @@
           </div>
         </div>
         <div class="box2">
-          <div class="addCar">加入购物车</div>
+          <div class="addCar" @click="addCar()">加入购物车</div>
           <div class="buy">立即购买</div>
         </div>
     </footer>
@@ -158,6 +158,23 @@ export default {
             }
           })
         })
+      })
+    },
+    addCar () {
+      let id = this.$route.params.id
+      // console.log(id)
+      Http.$axios({
+        url: '/api/addCar',
+        method: 'POST',
+        params: {
+          goodsId: id
+        },
+        headers: {
+          // token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'
+          token: true
+        }
+      }).then((res) => {
+        console.log(res.data)
       })
     }
   },

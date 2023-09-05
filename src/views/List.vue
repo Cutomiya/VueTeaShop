@@ -71,7 +71,8 @@ export default {
   name: 'List',
   methods: {
     re () {
-      this.$router.back()
+      // this.$router.back()
+      this.$router.push('home')
     }
   },
   data () {
@@ -142,9 +143,6 @@ section{
         font-size:14px;
         .goods-title{
           display: flex;
-          span{
-
-          }
           i{
             font-size:20px;
             margin:3px;

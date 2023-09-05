@@ -3,10 +3,35 @@ const app = express()
 const cors = require('cors')
 const connention = require('../dataBase/sql')
 const user = require('../dataBase/userSql')
+const jwt = require('jsonwebtoken')
 // const QcloudSms = require('qcouldsms_js')
 
 app.use(cors())
 let id
+
+// 加入购物车
+app.post('/api/addCar', (req, res, next) => {
+  let goodsId = req.query.goodsId
+  // console.log(req)
+  // token
+  let token = req.headers.token
+  let obj = jwt.decode(token) // 解析token
+  // console.log(obj.tel)
+  connention.query(`select * from user where tel = ${obj.tel}`, (error, result) => {
+    // console.log(result)
+    connention.query(`select * from goodslist where id = ${goodsId}`, (err, resp) => {
+      // console.log(resp)
+      let goodsName = resp[0].name
+      let goodsPrice = resp[0].price
+      let goodsImgUrl = resp[0].url
+      connention.query('insert into goodscart')
+      if (err) return false
+    })
+    if (error) {
+      return false
+    }
+  })
+})
 
 // 找回密码
 app.post('/api/setPassword', (req, res, next) => {
@@ -64,12 +89,13 @@ app.post('/api/register', (req, res, next) => {
     userPwd: req.query.userPwd
   }
   connention.query(user.queryUserTel(data), (err, results) => {
+    console.log(results)
     if (err) console.log(err)
     if (results.length > 0) { // 用户存在
       res.send({
         code: 200,
         data: {
-          success: true,
+          success: false,
           msg: '用户已存在',
           data: results[0]
         }
@@ -206,7 +232,8 @@ app.post('/api/login', (req, res, next) => {
 app.get('/api/goods/id', (req, res, next) => {
   if (req.query.id) id = req.query.id
   connention.query('select * from goodslist where id=' + id + '', (error, results) => {
-    if (error) { throw error }
+    // if (error) { throw error }
+    if (error) return
     res.json({
       code: 0,
       data: results

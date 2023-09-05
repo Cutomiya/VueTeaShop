@@ -92,6 +92,7 @@ export default {
         Toast(res.data.msg)
         // console.log(res)
         if (!res.success) return false
+        this.$router.push('/my')
       })
     },
     register () {
